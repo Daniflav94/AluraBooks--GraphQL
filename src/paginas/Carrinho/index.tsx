@@ -10,7 +10,7 @@ import { useCarrinhoContext } from "../../contextApi/carrinho";
 
 
 const Carrinho = () => {
-   const { carrinho, adicionarItemCarrinho } = useCarrinhoContext();
+   const { carrinho } = useCarrinhoContext();
 
     return (<section className="pagina-carrinho">
 

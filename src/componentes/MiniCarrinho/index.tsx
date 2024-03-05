@@ -14,7 +14,7 @@ const MiniCarrinho = () => {
 
 
     return (
-        <div>
+     
             <div className="carrinho dropdown">
                 <BotaoNavegacao
                     texto="Sacola"
@@ -27,7 +27,7 @@ const MiniCarrinho = () => {
                     <AbBotao texto="Ver sacola" onClick={() => navigate('/minha-sacola')}/>
                 </div>
             </div>
-        </div>
+       
     )
 }
 
