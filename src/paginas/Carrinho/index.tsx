@@ -13,22 +13,21 @@ import Loader from "../../componentes/Loader";
 const Carrinho = () => {
    const { carrinho, carregando } = useCarrinhoContext();
 
-   if(carregando) {
-    return (
-    <div className="carrinho-loader">
-        <Loader />
-    </div>)
-   }
-
     return (<section className="pagina-carrinho">
 
         <TituloPrincipal texto="Minha sacola" />
         <div className="conteudo">
             <h4>Itens selecionados</h4>
+            {carregando && 
+            <div className="carrinho-loader">
+                <Loader />
+            </div>}
             <div className="itens">
                 {carrinho?.itens.map((item, index) => 
                     <ItemCarrinho key={index} item={item} />)}  
             </div>
+            
+                    
             <div>
                 <Link to='/'>Continuar comprando</Link>
             </div>
