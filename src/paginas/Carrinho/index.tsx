@@ -6,11 +6,11 @@ import { formatador } from "../../utils/formatador-moeda"
 
 import './Carrinho.css'
 import ItemCarrinho from "./ItemCarrinho"
+import { useCarrinhoContext } from "../../contextApi/carrinho";
 
 
 const Carrinho = () => {
-    const { data } = useCarrinho()
-    console.log(data)
+   const { carrinho, adicionarItemCarrinho } = useCarrinhoContext();
 
     return (<section className="pagina-carrinho">
 
@@ -18,7 +18,7 @@ const Carrinho = () => {
         <div className="conteudo">
             <h4>Itens selecionados</h4>
             <div className="itens">
-                {data?.carrinho?.itens.map((item, index) => 
+                {carrinho?.itens.map((item, index) => 
                     <ItemCarrinho key={index} item={item} />)}  
             </div>
             <div>
@@ -27,7 +27,7 @@ const Carrinho = () => {
             <footer>
                 <ul>
                     <li>Total da compra</li>
-                    <li><strong>{formatador.format(data?.carrinho?.total || 0)}</strong></li>
+                    <li><strong>{formatador.format(carrinho?.total || 0)}</strong></li>
                     <li>
                         <AbBotao texto="Finalizar compra" />
                     </li>

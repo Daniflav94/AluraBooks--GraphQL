@@ -8,11 +8,15 @@ import { formatador } from "../../utils/formatador-moeda"
 
 import './Livro.css'
 import { useLivro } from "../../graphql/livros/hooks"
+import { useCarrinhoContext } from "../../contextApi/carrinho"
 
 const Livro = () => {
     const params = useParams()
 
+    const { adicionarItemCarrinho } = useCarrinhoContext()
+
     const [opcao, setOpcao] = useState<AbGrupoOpcao>()
+    const [quantidade, setQuantidade] = useState(1)
 
     const { data, loading, error } = useLivro(params.slug || '')
 
@@ -23,6 +27,24 @@ const Livro = () => {
     if(error) {
         console.log(error)
         return <h1>Ops! Algum erro inesperado aconteceu.</h1>
+    }
+
+    const aoAdicionarItemAoCarrinho = () => {
+        if (!data?.livro) {
+            return
+        }
+        const opcaoCompra = data.livro.opcoesCompra.find(op => op.id === opcao?.id)
+
+        if(!opcaoCompra) {
+            alert('Por favor selecione uma opção de compra')
+            return
+        }
+
+        adicionarItemCarrinho({
+            livro: data.livro,
+            quantidade,
+            opcaoCompra
+        })
     }
 
     const opcoes: AbGrupoOpcao[] = data?.livro.opcoesCompra ? data?.livro.opcoesCompra.map(opcao => ({
@@ -55,10 +77,10 @@ const Livro = () => {
                         <p><strong>*Você terá acesso às futuras atualizações do livro.</strong></p>
                         <footer>
                             <div className="qtdContainer">
-                                <AbInputQuantidade onChange={() => {}} value={0}/>
+                                <AbInputQuantidade onChange={setQuantidade} value={quantidade}/>
                             </div>
                             <div>
-                                <AbBotao texto="Comprar" />
+                                <AbBotao texto="Comprar" onClick={aoAdicionarItemAoCarrinho} />
                             </div>
                         </footer>
                     </div>

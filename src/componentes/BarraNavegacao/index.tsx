@@ -10,6 +10,7 @@ import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
+import MiniCarrinho from "../MiniCarrinho"
 
 const BarraNavegacao = () => {
 
@@ -81,6 +82,9 @@ const BarraNavegacao = () => {
         <ul className="acoes">
             {!usuarioEstaLogado && (<>
                 <li>
+                        <MiniCarrinho />
+                    </li>
+                <li>
                     <BotaoNavegacao
                         texto="Login"
                         textoAltSrc="Icone representando um usuário"
@@ -110,6 +114,9 @@ const BarraNavegacao = () => {
                 <>
                     <li>
                         <Link to="/minha-conta/pedidos">Minha conta</Link>
+                    </li>
+                    <li>
+                        <MiniCarrinho />
                     </li>
                     <li>
                         <BotaoNavegacao 
