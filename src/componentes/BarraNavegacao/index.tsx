@@ -8,6 +8,8 @@ import ModalLoginUsuario from "../ModalLoginUsuario"
 import logo from './assets/logo.png'
 import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 const BarraNavegacao = () => {
 
@@ -16,13 +18,30 @@ const BarraNavegacao = () => {
 
     const [categorias, setCategorias] = useState<ICategoria[]>([])
 
+    const OBTER_CATEGORIAS = gql`
+    query ObterCategorias {
+        categorias {
+          id,
+          nome,
+          slug
+        }
+      }          
+        `
+
     useEffect(() => {
-        http.get<ICategoria[]>('categorias')
-            .then(resposta => {
-                console.log(resposta.data)
-                setCategorias(resposta.data)
-            })
+        // http.get<ICategoria[]>('categorias')
+        //     .then(resposta => {
+        //         console.log(resposta.data)
+        //         setCategorias(resposta.data)
+        //     })
+       
+       
     }, [])
+
+
+        const { data } = useQuery< {categorias: ICategoria[]}>(OBTER_CATEGORIAS);
+ 
+    
 
     let navigate = useNavigate();
 
@@ -51,7 +70,7 @@ const BarraNavegacao = () => {
             <li>
                 <a href="#!">Categorias</a>
                 <ul className="submenu">
-                    {categorias.map(categoria => (<li key={categoria.id}>
+                    {data?.categorias.map(categoria => (<li key={categoria.id}>
                         <Link to={`/categorias/${categoria.slug}`}>
                             {categoria.nome}
                         </Link>

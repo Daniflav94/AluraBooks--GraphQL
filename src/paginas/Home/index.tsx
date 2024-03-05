@@ -5,16 +5,22 @@ import LivrosDestaque from "../../componentes/LivrosDestaque"
 import Newsletter from "../../componentes/Newsletter"
 import TagsCategorias from "../../componentes/TagsCategorias"
 import Titulo from "../../componentes/Titulo"
-import { useQuery } from "@tanstack/react-query"
 
 import './Home.css'
-import { obterLivrosDestaque } from "../../http"
+import { useReactiveVar } from '@apollo/client';
+import { lancamentosVar, maisVendidosVar } from "../../graphql/destaques/state"
+import { useDestaques } from "../../graphql/destaques/hooks"
 
 const Home = () => {
     const [busca, setBusca] = useState("")
 
-    const { data: lancamentos } = useQuery(['destaques'], () => obterLivrosDestaque('lancamentos'))
-    const { data: maisVendidos } = useQuery(['maisVendidos'], () => obterLivrosDestaque('mais-vendidos'))
+    const lancamentos = useReactiveVar(lancamentosVar);
+    const maisVendidos = useReactiveVar(maisVendidosVar);
+
+    console.log(lancamentos)
+
+    useDestaques();
+
     return (<section className="home">
         <Banner subtitulo="Encontre em nossa estante o que precisa para seu desenvolvimento!" titulo="Já sabe por onde começar?">
             <form className="buscar">
