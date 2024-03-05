@@ -7,10 +7,18 @@ import { formatador } from "../../utils/formatador-moeda"
 import './Carrinho.css'
 import ItemCarrinho from "./ItemCarrinho"
 import { useCarrinhoContext } from "../../contextApi/carrinho";
+import Loader from "../../componentes/Loader";
 
 
 const Carrinho = () => {
-   const { carrinho } = useCarrinhoContext();
+   const { carrinho, carregando } = useCarrinhoContext();
+
+   if(carregando) {
+    return (
+    <div className="carrinho-loader">
+        <Loader />
+    </div>)
+   }
 
     return (<section className="pagina-carrinho">
 
